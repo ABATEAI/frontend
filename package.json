@@ -1,0 +1,29 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "pip-install": "pip3 install --no-cache-dir --upgrade -r src/api/requirements.txt",
+    "google-dev": "uvicorn api.google:gapp --host 0.0.0.0 --port 8000 --reload",
+    "square-dev": "uvicorn api.square:sapp --host 0.0.0.0 --port 8081 --reload",
+    "python-dev": "npm run -s google-dev & npm run -s square-dev",
+    "fastapi-dev": "npm run -s pip-install && npm run -s python-dev",
+    "next-dev": "next dev",
+    "dev": "concurrently \"npm run next-dev\" \"npm run fastapi-dev\"",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "date-fns": "^2.30.0",
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "swr": "^2.2.4"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.1",
+    "eslint": "latest",
+    "eslint-config-next": "latest"
+  }
+}
