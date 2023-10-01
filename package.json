@@ -12,7 +12,8 @@
     "dev": "concurrently \"npm run next-dev\" \"npm run fastapi-dev\"",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prettier-format": "prettier --config .prettierrc --write src/app"
   },
   "dependencies": {
     "date-fns": "^2.30.0",
@@ -24,6 +25,7 @@
   "devDependencies": {
     "concurrently": "^8.2.1",
     "eslint": "latest",
-    "eslint-config-next": "latest"
+    "eslint-config-next": "latest",
+    "prettier": "^3.0.3"
   }
 }
