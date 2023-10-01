@@ -1,0 +1,15 @@
+name: Prettier
+
+on: [push, pull_request]
+
+jobs:
+  # https://github.com/marketplace/actions/prettier-action
+  prettier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+      - name: Install modules
+        run: npm ci
+      - name: Run Prettier
+        run: npm run prettier-format
