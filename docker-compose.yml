@@ -1,0 +1,44 @@
+# Referenced the following:
+# - https://medium.com/@elifront/best-next-js-docker-compose-hot-reload
+#   -production-ready-docker-setup-28a9125ba1dc
+# - https://jameschambers.co.uk/nextjs-hot-reload-docker-development
+# - https://docs.docker.com/network/network-tutorial-standalone/
+# - https://www.docker.com/blog/containerized-python-development-part-2/
+#
+# This docker-compose.yml is intended for development, not production
+
+services:
+  frontend:
+    container_name: frontend
+    build:
+      context: .
+      target: dev
+    command: npm run dev
+    restart: always
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./:/frontend
+      - /frontend/node_modules
+      - /frontend/.next
+    networks:
+      - abateai-net
+    ports:
+      - 3000:3000
+
+  backend:
+    container_name: backend
+    build: ./api
+    # Can also use --host 0.0.0.0
+    command: ["uvicorn app.index:app --host backend --port 8000 --reload"]
+    restart: always
+    volumes:
+      - ./api/src:/usr/src/app
+    networks:
+      - abateai-net
+    # Uncommenting allows direct access to http://localhost:8000/api/<api_path>
+    # ports:
+    #   - 8000:8000
+
+networks:
+  abateai-net:
