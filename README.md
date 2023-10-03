@@ -52,7 +52,7 @@ referenced during development.
   https://github.com/vercel/examples/tree/main/python/nextjs-flask
 - https://vercel.com/guides/how-to-use-python-and-javascript-in-the-same-application
 
-The development server is started with
+The development servers are started with
 
 ```bash
 $ docker-compose up -d
@@ -66,7 +66,7 @@ The page auto-updates as you edit the file.
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization)
 to automatically optimize and load Inter, a custom Google Font.
 
-Once you are done with development, shut down the development server with
+Once you are done with development, shut down the development servers with
 
 ```bash
 $ docker-compose down
