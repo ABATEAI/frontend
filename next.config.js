@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    // Route /api requests to http://127.0.0.1:8000 uvicorn development server
+    // Route /api requests to uvicorn development server at http://backend:8000.
+    // Can use http://backend since containers are on custom abateai-net network
+    //
     // Referenced:
     // - https://vercel.com/guides/
     //   how-to-use-python-and-javascript-in-the-same-application
