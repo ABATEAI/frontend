@@ -17,7 +17,6 @@
     "swr": "^2.2.4"
   },
   "devDependencies": {
-    "concurrently": "^8.2.1",
     "eslint": "latest",
     "eslint-config-next": "latest",
     "prettier": "^3.0.3"
