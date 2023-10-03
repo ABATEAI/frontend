@@ -7,13 +7,17 @@ const nextConfig = {
     // - https://github.com/digitros/nextjs-fastapi/blob/main/next.config.js
     // - https://github.com/wpcodevo/nextjs-fastapi-framework/
     //   blob/main/next.config.js
+    //
+    // Somehow I figured out the magic is to use http://backend:8000/api/:path*
+    // instead of http://127.0.0.1:8000/api/:path* for development. This allows
+    // the frontend container to talk to the backend container over abateai-net.
     rewrites: async () => {
         return [
             {
                 source: "/api/:path*",
                 destination:
                     process.env.NODE_ENV === "development"
-                        ? "http://127.0.0.1:8000/api/:path*"
+                        ? "http://backend:8000/api/:path*"
                         : "/api/",
             },
         ];
