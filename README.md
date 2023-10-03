@@ -17,10 +17,17 @@ for abateai.com
 
 ### Installation
 
-First, clone the repo with
+First, clone the repo and change directory into it with
 
 ```bash
+$ git clone --recurse-submodules https://github.com/ABATEAI/frontend.git
+$ cd frontend
+
+# OR
+
 $ git clone https://github.com/ABATEAI/frontend.git
+$ cd frontend
+$ git submodule update --init
 ```
 
 Assuming you have installed Docker Desktop, open the application and sign in.
@@ -52,10 +59,16 @@ referenced during development.
   https://github.com/vercel/examples/tree/main/python/nextjs-flask
 - https://vercel.com/guides/how-to-use-python-and-javascript-in-the-same-application
 
-The development servers are started with
+The services are started with
 
 ```bash
 $ docker-compose up -d
+```
+
+You can also build and start the services with the combined command
+
+```bash
+$ docker-compose up -d --build
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -66,7 +79,7 @@ The page auto-updates as you edit the file.
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization)
 to automatically optimize and load Inter, a custom Google Font.
 
-Once you are done with development, shut down the development servers with
+Once you are done with development, shut down the services with
 
 ```bash
 $ docker-compose down
