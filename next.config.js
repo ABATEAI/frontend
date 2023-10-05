@@ -9,6 +9,7 @@ const nextConfig = {
     // - https://github.com/digitros/nextjs-fastapi/blob/main/next.config.js
     // - https://github.com/wpcodevo/nextjs-fastapi-framework/
     //   blob/main/next.config.js
+    // - https://nextjs.org/docs/app/api-reference/next-config-js/rewrites
     //
     // Somehow I figured out the magic is to use http://backend:8000/api/:path*
     // instead of http://127.0.0.1:8000/api/:path* for development. This allows
@@ -20,7 +21,7 @@ const nextConfig = {
                 destination:
                     process.env.NODE_ENV === "development"
                         ? "http://backend:8000/api/:path*"
-                        : "https://backend-rxmevdt6aq-uc.a.run.app/api/",
+                        : "https://backend-rxmevdt6aq-uc.a.run.app/api/:path*",
             },
         ];
     },
