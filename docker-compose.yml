@@ -30,7 +30,7 @@ services:
     container_name: backend
     build: ./api
     # Can also use --host 0.0.0.0
-    command: ["uvicorn app.index:app --host backend --port 8000 --reload"]
+    command: ["sh", "-c", "uvicorn app.index:app --host backend --port 8000 --reload"]
     restart: always
     volumes:
       - ./api/src:/usr/src/app
