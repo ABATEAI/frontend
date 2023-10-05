@@ -15,7 +15,7 @@ FROM base AS deps
 # Check https://github.com/nodejs/docker-node/tree
 # /b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why
 # libc6-compat might be needed.
-RUN apk update && apk add --no-cache libc6-compat
+RUN apk add --no-cache libc6-compat
 
 # Set working directory in container
 WORKDIR /frontend
@@ -76,9 +76,11 @@ USER nextjs
 # set hostname to localhost
 ENV HOSTNAME "0.0.0.0"
 
+EXPOSE ${PORT}
+
 # Set labels
 LABEL vendor1="ABATE AI"
-LABEL com.abateai.release-date="2023-10-02"
-LABEL com.abateai.version="1.0.0"
+LABEL com.abateai.release-date="2023-10-04"
+LABEL com.abateai.version="1.0.1"
 
 CMD ["node", "server.js"]
