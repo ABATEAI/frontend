@@ -20,7 +20,7 @@ const nextConfig = {
                 destination:
                     process.env.NODE_ENV === "development"
                         ? "http://backend:8000/api/:path*"
-                        : process.env.BACKEND_PRODUCTION_URL + "/api/",
+                        : "https://backend-rxmevdt6aq-uc.a.run.app/api/",
             },
         ];
     },
