@@ -59,7 +59,7 @@ WORKDIR /frontend
 # My internet connection isn't great so I'm going to disable this just in case
 ENV NEXT_TELEMETRY_DISABLED 1
 
-RUN addgroup --system --gid 1001 nodejs && adduser --system -uid 1001 nextjs
+RUN addgroup --system --gid 1001 nodejs && adduser --system --uid 1001 nextjs
 
 COPY --from=builder /frontend/public ./public
 
@@ -81,6 +81,6 @@ EXPOSE ${PORT}
 # Set labels
 LABEL vendor1="ABATE AI"
 LABEL com.abateai.release-date="2023-10-04"
-LABEL com.abateai.version="1.0.1"
+LABEL com.abateai.version="1.0.2"
 
 CMD ["node", "server.js"]
