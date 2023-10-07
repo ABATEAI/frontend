@@ -41,6 +41,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files / environments
+**/config.toml
 **/.env*.local
 **/.env
 **/.venv
