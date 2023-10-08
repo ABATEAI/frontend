@@ -31,7 +31,11 @@ services:
     build: ./api
     # Can also use --host 0.0.0.0
     command: ["sh", "-c", "uvicorn app.index:app --host backend --port 8000 --reload"]
+    environment:
+      CONFIG_TOML_FILE: /run/secrets/config_toml
     restart: always
+    secrets:
+      - config_toml
     volumes:
       - ./api/src:/usr/src/app
     networks:
@@ -42,3 +46,8 @@ services:
 
 networks:
   abateai-net:
+
+# Referenced https://docs.docker.com/compose/use-secrets/
+secrets:
+  config_toml:
+    file: config.toml
