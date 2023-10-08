@@ -30,6 +30,14 @@ $ cd frontend
 $ git submodule update --init
 ```
 
+Copy [config.toml.example](config.toml.example) and rename the copy to
+`config.toml`. Populate the configuration fields with development values.
+Please reach out to [@jeffrylew](https://github.com/jeffrylew) for the specific
+values. Make sure `config.toml` does not get version controlled or added to
+GitHub! It has been added to [.gitignore](.gitignore),
+[.dockerignore](.dockerignore), and [.gcloudignore](.gcloudignore) to avoid
+leaking credentials.
+
 Assuming you have installed Docker Desktop, open the application and sign in.
 Then build the Docker images for the ABATE AI frontend and backend services via
 `docker-compose`
@@ -91,19 +99,3 @@ and quit Docker Desktop (don't just exit, ensure you power down the engine).
 
 Frontend development suggestions can be requested by opening a new ticket at
 https://github.com/ABATEAI/frontend/issues.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/).
-Your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
