@@ -1,13 +1,13 @@
 {
   "name": "frontend",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prettier-format": "prettier --config .prettierrc --write src/app"
+    "prettier-format": "prettier --config .prettierrc --write src/"
   },
   "dependencies": {
     "@types/react-bootstrap": "^0.32.33",
