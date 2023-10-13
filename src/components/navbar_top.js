@@ -1,6 +1,5 @@
 "use client"
 
-import ABATEAI_Logo from "../../public/images/ABATE_266x64.png"
 import Button from "react-bootstrap/Button"
 import CartIcon from "../../public/icons/shopping_cart.svg"
 import CartModal from "./cart_modal.js"
@@ -52,7 +51,8 @@ export default function NavbarTop() {
               alt="ABATE AI Logo"
               className="d-inline-block align-top"
               height={43}
-              src={ABATEAI_Logo}
+              src="/images/ABATE_266x64.png"
+              width={179}
             />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbar-nav" />
