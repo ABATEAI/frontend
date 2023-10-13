@@ -39,7 +39,13 @@ export default function NavbarTop() {
 
   return (
     <>
-      <Navbar fixed="top" expand="lg" bg="white" data-bs-theme="light">
+      <Navbar
+        bg="white"
+        className="py-4"
+        data-bs-theme="light"
+        expand="lg"
+        fixed="top"
+      >
         <Container>
           <Navbar.Brand as={Link} href="/">
             <Image
