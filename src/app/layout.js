@@ -1,5 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css"
 import "./globals.css"
+import NavbarTop from "../components/navbar_top"
 import { Roboto_Flex } from "next/font/google"
 
 const roboto_flex = Roboto_Flex({ subsets: ["latin"] })
@@ -31,7 +32,11 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en" className={roboto_flex.className}>
-      <body>{children}</body>
+      <body>
+        <NavbarTop />
+
+        {children}
+      </body>
     </html>
   )
 }
