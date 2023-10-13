@@ -30,7 +30,7 @@ export default function ProductGrid() {
     <Row xs={1} md={2} xxl={3}>
       {["Pizza_1", "Pizza_2", "Pizza_3", "Pizza_4", "Pizza_5", "Pizza_6"].map(
         (item) => (
-          <Col className="mb-4">
+          <Col className="mb-4" key={item}>
             <ProductCard name={item} />
           </Col>
         )
