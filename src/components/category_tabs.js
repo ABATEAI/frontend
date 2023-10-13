@@ -36,7 +36,7 @@ export default function CategoryTabs() {
     >
       {["Classic", "Supreme", "Chicken", "Veggie"].map((category) => (
         // Product grid should be retrieved from Square API.
-        <Tab eventKey={category.toLowerCase()} title={category}>
+        <Tab eventKey={category.toLowerCase()} key={category} title={category}>
           <ProductGrid />
         </Tab>
       ))}
