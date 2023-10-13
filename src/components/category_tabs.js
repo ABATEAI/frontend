@@ -1,5 +1,6 @@
 "use client"
 
+import ProductGrid from "../components/product_grid"
 import Tab from "react-bootstrap/Tab"
 import Tabs from "react-bootstrap/Tabs"
 import { useEffect } from "react"
@@ -33,21 +34,12 @@ export default function CategoryTabs() {
       justify
       variant="underline"
     >
-      <Tab eventKey="classic" title="Classic">
-        Product grid for Classic should be retrieved from Square API.
-      </Tab>
-
-      <Tab eventKey="supreme" title="Supreme">
-        Product grid for Supreme should be retrieved from Square API.
-      </Tab>
-
-      <Tab eventKey="chicken" title="Chicken">
-        Product grid for Chicken should be retrieved from Square API.
-      </Tab>
-
-      <Tab eventKey="veggie" title="Veggie">
-        Product grid for Veggie should be retrieved from Square API.
-      </Tab>
+      {["Classic", "Supreme", "Chicken", "Veggie"].map((category) => (
+        // Product grid should be retrieved from Square API.
+        <Tab eventKey={category.toLowerCase()} title={category}>
+          <ProductGrid />
+        </Tab>
+      ))}
     </Tabs>
   )
 }
