@@ -1,22 +1,19 @@
-import "bootstrap/dist/css/bootstrap.min.css"
-import "./globals.css"
-import NavbarTop from "../components/navbar_top"
-import { Roboto_Flex } from "next/font/google"
+"use client"
 
-const roboto_flex = Roboto_Flex({ subsets: ["latin"] })
+import Col from "react-bootstrap/Col"
+import ProductCard from "./product_card"
+import Row from "react-bootstrap/Row"
+import { useEffect } from "react"
 
-export const metadata = {
-  title: "ABATE AI",
-  description: "Reduce to increase",
-}
-
-export default function RootLayout({ children }) {
+// Todo: Pass in props containing product data from Square
+export default function ProductGrid() {
   /*
    * useEffect() can only be used in client components.
    * react-bootstrap does not depend on bootstrap.js and
-   * all components are exported on window.ReactBootstrap obj
-   * 
+   * all components are exported on window.ReactBootstrap
+   *
    * Referenced:
+   * - react-bootstrap.netlify.app/docs/components/cards/
    * - react-bootstrap.netlify.app/docs/getting-started/introduction/
    * - react-bootstrap.netlify.app/docs/getting-started/why-react-bootstrap
    * - blog.logrocket.com/handling-bootstrap-integration-next-js/
@@ -24,19 +21,20 @@ export default function RootLayout({ children }) {
    * - www.slingacademy.com/article/how-to-correctly-use-bootstrap-5-in-next-js/
    * - nextjs.org/docs/app/api-reference/file-conventions/layout
    * - nextjs.org/docs/app/building-your-application/rendering/client-components
-   * 
+   */
   useEffect(() => {
     import("react-bootstrap/dist/react-bootstrap.min.js")
   }, [])
-  */
 
   return (
-    <html lang="en" className={roboto_flex.className}>
-      <body>
-        <NavbarTop />
-
-        {children}
-      </body>
-    </html>
+    <Row xs={1} md={2} xxl={3}>
+      {["Pizza_1", "Pizza_2", "Pizza_3", "Pizza_4", "Pizza_5", "Pizza_6"].map(
+        (item) => (
+          <Col className="mb-4" key={item}>
+            <ProductCard name={item} />
+          </Col>
+        )
+      )}
+    </Row>
   )
 }

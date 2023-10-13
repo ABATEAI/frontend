@@ -1,18 +1,21 @@
 {
   "name": "frontend",
-  "version": "0.1.1",
+  "version": "0.1.5",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prettier-format": "prettier --config .prettierrc --write src/app"
+    "prettier-format": "prettier --config .prettierrc --write src/"
   },
   "dependencies": {
+    "@types/react-bootstrap": "^0.32.33",
+    "bootstrap": "^5.3.2",
     "date-fns": "^2.30.0",
     "next": "latest",
     "react": "latest",
+    "react-bootstrap": "^2.9.0",
     "react-dom": "latest",
     "swr": "^2.2.4"
   },
