@@ -60,6 +60,9 @@ export default async function Home() {
   // props to pass to CategoryTabs
   let props = {}
 
+  // Map of category names to item objects
+  let categoryItemMap = new Map()
+
   // Map of category ids to category names
   let idCategoryMap = new Map()
 
@@ -79,13 +82,23 @@ export default async function Home() {
       }
     }
 
+    // Fill categoryItemMap
+    for (const item of catalogObjects.objects) {
+      const categoryName = idCategoryMap.get(item.item_data.category_id)
+
+      if (!categoryItemMap.has(categoryName)) {
+        categoryItemMap.set(categoryName, [item])
+      } else {
+        categoryItemMap.get(categoryName).push(item)
+      }
+    }
+
     const catalogSizes = await getCatalogSizes()
 
     props = {
-      idCategoryMap,
-      idImageMap,
-      catalogObjects,
+      categoryItemMap,
       catalogSizes,
+      idImageMap,
     }
   } catch (error) {
     console.error("Error:", error)
