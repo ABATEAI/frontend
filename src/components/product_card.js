@@ -1,7 +1,9 @@
 "use client"
 
 import Card from "react-bootstrap/Card"
+import Image from "next/image"
 import Link from "next/link"
+import styles from "./product_card.module.css"
 import { useEffect } from "react"
 
 export default function ProductCard({ catalogSizes, idImageMap, itemObj }) {
@@ -43,15 +45,29 @@ export default function ProductCard({ catalogSizes, idImageMap, itemObj }) {
     minimumFractionDigits: 2,
   })
 
+  // Product image alt and path
+  const imageAlt = "Image of " + itemData.name
+  const imagePath = "/images/" + idImageMap.get(itemData.image_ids[0])
+
   return (
     <Card border="secondary" href="/">
       <Link href="/">
-        <Card.Img src="https://picsum.photos/id/292/300/200" variant="top" />
+        <div className={styles.card_img_wrapper}>
+          <Card.Img
+            alt={imageAlt}
+            as={Image}
+            height={200}
+            src={imagePath}
+            style={{ height: "auto", objectFit: "cover", width: "100%" }}
+            variant="top"
+            width={300}
+          />
+        </div>
       </Link>
 
       <Card.Body>
         <Card.Title>{itemData.name}</Card.Title>
-        <Card.Text>{itemData.description.substring(0, 50)}...</Card.Text>
+        <Card.Text>{itemData.description.substring(0, 47)}...</Card.Text>
         <Card.Text className="text-muted">
           ${lowPriceString} - ${highPriceString}
         </Card.Text>
