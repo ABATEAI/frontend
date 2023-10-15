@@ -4,8 +4,7 @@ import Card from "react-bootstrap/Card"
 import Link from "next/link"
 import { useEffect } from "react"
 
-// Todo: Pass in props containing product data from Square
-export default function ProductCard(props) {
+export default function ProductCard({ catalogSizes, idImageMap, itemObj }) {
   /*
    * useEffect() can only be used in client components.
    * react-bootstrap does not depend on bootstrap.js and
@@ -25,6 +24,25 @@ export default function ProductCard(props) {
     import("react-bootstrap/dist/react-bootstrap.min.js")
   }, [])
 
+  const itemData = itemObj.item_data
+
+  // Get lower and upper bounds on product price
+  const lowPrice =
+    itemData.variations[0].item_variation_data.price_money.amount / 100.0
+  const highPrice =
+    itemData.variations[itemData.variations.length - 1].item_variation_data
+      .price_money.amount / 100.0
+
+  // Convert prices to strings with two decimal places
+  const lowPriceString = lowPrice.toLocaleString("en-US", {
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2,
+  })
+  const highPriceString = highPrice.toLocaleString("en-US", {
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2,
+  })
+
   return (
     <Card border="secondary" href="/">
       <Link href="/">
@@ -32,9 +50,11 @@ export default function ProductCard(props) {
       </Link>
 
       <Card.Body>
-        <Card.Title>{props.name}</Card.Title>
-        <Card.Text>Product details</Card.Text>
-        <Card.Text className="text-muted">$XX.XX - $YY.YY</Card.Text>
+        <Card.Title>{itemData.name}</Card.Title>
+        <Card.Text>{itemData.description.substring(0, 50)}...</Card.Text>
+        <Card.Text className="text-muted">
+          ${lowPriceString} - ${highPriceString}
+        </Card.Text>
       </Card.Body>
     </Card>
   )
