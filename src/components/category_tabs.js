@@ -5,11 +5,7 @@ import Tab from "react-bootstrap/Tab"
 import Tabs from "react-bootstrap/Tabs"
 import { useEffect } from "react"
 
-export default function CategoryTabs({
-  categoryItemMap,
-  catalogSizes,
-  idImageMap,
-}) {
+export default function CategoryTabs({ categoryItemMap, idImageMap }) {
   /*
    * useEffect() can only be used in client components.
    * react-bootstrap does not depend on bootstrap.js and
@@ -40,7 +36,6 @@ export default function CategoryTabs({
       {[...categoryItemMap.keys()].map((category) => (
         <Tab eventKey={category.toLowerCase()} key={category} title={category}>
           <ProductGrid
-            catalogSizes={catalogSizes}
             idImageMap={idImageMap}
             itemArray={categoryItemMap.get(category)}
           />
