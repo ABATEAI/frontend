@@ -1,12 +1,16 @@
 "use client"
 
+import Button from "react-bootstrap/Button"
 import Card from "react-bootstrap/Card"
 import Image from "next/image"
-import Link from "next/link"
 import styles from "./product_card.module.css"
 import { useEffect } from "react"
 
-export default function ProductCard({ catalogSizes, idImageMap, itemObj }) {
+export default function ProductCard({
+  handleProductModalShow,
+  idImageMap,
+  itemObj,
+}) {
   /*
    * useEffect() can only be used in client components.
    * react-bootstrap does not depend on bootstrap.js and
@@ -50,8 +54,12 @@ export default function ProductCard({ catalogSizes, idImageMap, itemObj }) {
   const imagePath = "/images/" + idImageMap.get(itemData.image_ids[0])
 
   return (
-    <Card border="secondary" href="/">
-      <Link href="/">
+    <Card border="secondary" href="#">
+      <span
+        as={Button}
+        className={styles.span_wrapper}
+        onClick={handleProductModalShow}
+      >
         <div className={styles.card_img_wrapper}>
           <Card.Img
             alt={imageAlt}
@@ -63,7 +71,7 @@ export default function ProductCard({ catalogSizes, idImageMap, itemObj }) {
             width={300}
           />
         </div>
-      </Link>
+      </span>
 
       <Card.Body>
         <Card.Title>{itemData.name}</Card.Title>
