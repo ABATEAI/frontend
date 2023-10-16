@@ -5,8 +5,7 @@ import ProductCard from "./product_card"
 import Row from "react-bootstrap/Row"
 import { useEffect } from "react"
 
-// Todo: Pass in props containing product data from Square
-export default function ProductGrid() {
+export default function ProductGrid({ catalogSizes, idImageMap, itemArray }) {
   /*
    * useEffect() can only be used in client components.
    * react-bootstrap does not depend on bootstrap.js and
@@ -28,13 +27,15 @@ export default function ProductGrid() {
 
   return (
     <Row xs={1} md={2} xxl={3}>
-      {["Pizza_1", "Pizza_2", "Pizza_3", "Pizza_4", "Pizza_5", "Pizza_6"].map(
-        (item) => (
-          <Col className="mb-4" key={item}>
-            <ProductCard name={item} />
-          </Col>
-        )
-      )}
+      {itemArray.map((itemObj) => (
+        <Col className="mb-4" key={itemObj.id}>
+          <ProductCard
+            catalogSizes={catalogSizes}
+            idImageMap={idImageMap}
+            itemObj={itemObj}
+          />
+        </Col>
+      ))}
     </Row>
   )
 }

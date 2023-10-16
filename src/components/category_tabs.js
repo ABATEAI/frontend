@@ -5,8 +5,11 @@ import Tab from "react-bootstrap/Tab"
 import Tabs from "react-bootstrap/Tabs"
 import { useEffect } from "react"
 
-// Todo: Pass in props containing category and product data from Square
-export default function CategoryTabs() {
+export default function CategoryTabs({
+  categoryItemMap,
+  catalogSizes,
+  idImageMap,
+}) {
   /*
    * useEffect() can only be used in client components.
    * react-bootstrap does not depend on bootstrap.js and
@@ -34,10 +37,13 @@ export default function CategoryTabs() {
       justify
       variant="underline"
     >
-      {["Classic", "Supreme", "Chicken", "Veggie"].map((category) => (
-        // Product grid should be retrieved from Square API.
+      {[...categoryItemMap.keys()].map((category) => (
         <Tab eventKey={category.toLowerCase()} key={category} title={category}>
-          <ProductGrid />
+          <ProductGrid
+            catalogSizes={catalogSizes}
+            idImageMap={idImageMap}
+            itemArray={categoryItemMap.get(category)}
+          />
         </Tab>
       ))}
     </Tabs>
