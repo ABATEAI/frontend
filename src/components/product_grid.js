@@ -5,7 +5,7 @@ import ProductCard from "./product_card"
 import Row from "react-bootstrap/Row"
 import { useEffect } from "react"
 
-export default function ProductGrid({ catalogSizes, idImageMap, itemArray }) {
+export default function ProductGrid({ idImageMap, itemArray }) {
   /*
    * useEffect() can only be used in client components.
    * react-bootstrap does not depend on bootstrap.js and
@@ -29,11 +29,7 @@ export default function ProductGrid({ catalogSizes, idImageMap, itemArray }) {
     <Row xs={1} md={2} xxl={3}>
       {itemArray.map((itemObj) => (
         <Col className="mb-4" key={itemObj.id}>
-          <ProductCard
-            catalogSizes={catalogSizes}
-            idImageMap={idImageMap}
-            itemObj={itemObj}
-          />
+          <ProductCard idImageMap={idImageMap} itemObj={itemObj} />
         </Col>
       ))}
     </Row>

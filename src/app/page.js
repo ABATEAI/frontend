@@ -93,11 +93,8 @@ export default async function Home() {
       }
     }
 
-    const catalogSizes = await getCatalogSizes()
-
     props = {
       categoryItemMap,
-      catalogSizes,
       idImageMap,
     }
   } catch (error) {

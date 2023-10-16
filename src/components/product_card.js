@@ -1,12 +1,14 @@
 "use client"
 
+import Button from "react-bootstrap/Button"
 import Card from "react-bootstrap/Card"
 import Image from "next/image"
-import Link from "next/link"
+import ProductModal from "./product_modal"
 import styles from "./product_card.module.css"
 import { useEffect } from "react"
+import { useState } from "react"
 
-export default function ProductCard({ catalogSizes, idImageMap, itemObj }) {
+export default function ProductCard({ idImageMap, itemObj }) {
   /*
    * useEffect() can only be used in client components.
    * react-bootstrap does not depend on bootstrap.js and
@@ -25,6 +27,11 @@ export default function ProductCard({ catalogSizes, idImageMap, itemObj }) {
   useEffect(() => {
     import("react-bootstrap/dist/react-bootstrap.min.js")
   }, [])
+
+  const [productModalShow, setProductModalShow] = useState(false)
+
+  const handleProductModalClose = () => setProductModalShow(false)
+  const handleProductModalShow = () => setProductModalShow(true)
 
   const itemData = itemObj.item_data
 
@@ -50,28 +57,42 @@ export default function ProductCard({ catalogSizes, idImageMap, itemObj }) {
   const imagePath = "/images/" + idImageMap.get(itemData.image_ids[0])
 
   return (
-    <Card border="secondary" href="/">
-      <Link href="/">
-        <div className={styles.card_img_wrapper}>
-          <Card.Img
-            alt={imageAlt}
-            as={Image}
-            height={200}
-            src={imagePath}
-            style={{ height: "auto", objectFit: "cover", width: "100%" }}
-            variant="top"
-            width={300}
-          />
-        </div>
-      </Link>
+    <>
+      <Card border="secondary" href="#">
+        <span
+          as={Button}
+          className={styles.span_wrapper}
+          onClick={handleProductModalShow}
+        >
+          <div className={styles.card_img_wrapper}>
+            <Card.Img
+              alt={imageAlt}
+              as={Image}
+              height={200}
+              src={imagePath}
+              style={{ height: "auto", objectFit: "cover", width: "100%" }}
+              variant="top"
+              width={300}
+            />
+          </div>
+        </span>
 
-      <Card.Body>
-        <Card.Title>{itemData.name}</Card.Title>
-        <Card.Text>{itemData.description.substring(0, 47)}...</Card.Text>
-        <Card.Text className="text-muted">
-          ${lowPriceString} - ${highPriceString}
-        </Card.Text>
-      </Card.Body>
-    </Card>
+        <Card.Body>
+          <Card.Title>{itemData.name}</Card.Title>
+          <Card.Text>{itemData.description.substring(0, 47)}...</Card.Text>
+          <Card.Text className="text-muted">
+            ${lowPriceString} - ${highPriceString}
+          </Card.Text>
+        </Card.Body>
+      </Card>
+
+      <ProductModal
+        idImageMap={idImageMap}
+        itemObj={itemObj}
+        onAddToOrder={() => console.log("Added items to order")}
+        onHide={handleProductModalClose}
+        show={productModalShow}
+      />
+    </>
   )
 }
