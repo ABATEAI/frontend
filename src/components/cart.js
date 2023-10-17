@@ -26,10 +26,16 @@ export default class Cart {
   }
 
   getTotalItems() {
+    // Load from sessionStorage first for consistency among multiple Carts
+    this.loadFromSessionStorage()
+
     return Number(this.totalItems)
   }
 
   getTotalPrice() {
+    // Load from sessionStorage first for consistency among multiple Carts
+    this.loadFromSessionStorage()
+
     this.totalPrice.toLocaleString("en-US", {
       maximumFractionDigits: 2,
       minimumFractionDigits: 2,
@@ -93,6 +99,9 @@ export default class Cart {
   }
 
   addItem(item_id, item_name, item_price) {
+    // Load from sessionStorage first for consistency among multiple Carts
+    this.loadFromSessionStorage()
+
     if (this.cart.has(item_id)) {
       // If item already exists in cart, update its quantity
       this.cart.get(item_id).qty++
@@ -109,6 +118,9 @@ export default class Cart {
   }
 
   removeItem(item_id) {
+    // Load from sessionStorage first for consistency among multiple Carts
+    this.loadFromSessionStorage()
+
     if (!this.cart.has(item_id)) {
       return
     }
@@ -128,6 +140,9 @@ export default class Cart {
    * @param {string} item_id Square item id
    */
   removeItemAll(item_id) {
+    // Load from sessionStorage first for consistency among multiple Carts
+    this.loadFromSessionStorage()
+
     if (!this.cart.has(item_id)) {
       return
     }
