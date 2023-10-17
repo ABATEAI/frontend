@@ -2,6 +2,7 @@
 
 import ABATEAI_Logo from "../../public/icons/ABATE_266x64.svg"
 import Button from "react-bootstrap/Button"
+import Cart from "./cart"
 import CartIcon from "../../public/icons/shopping_cart.svg"
 import CartModal from "./cart_modal.js"
 import Container from "react-bootstrap/Container"
@@ -32,10 +33,15 @@ export default function NavbarTop() {
     import("react-bootstrap/dist/react-bootstrap.min.js")
   }, [])
 
+  let cart = new Cart()
+
   const [cartModalShow, setCartModalShow] = useState(false)
 
   const handleCartModalClose = () => setCartModalShow(false)
-  const handleCartModalShow = () => setCartModalShow(true)
+  const handleCartModalShow = () => {
+    cart.loadFromSessionStorage()
+    setCartModalShow(true)
+  }
 
   return (
     <>
@@ -99,7 +105,7 @@ export default function NavbarTop() {
       </Navbar>
 
       <CartModal
-        onClear={() => console.log("Clear all order items.")}
+        cart={cart}
         onHide={handleCartModalClose}
         onOrder={() => console.log("Place order via Square API.")}
         show={cartModalShow}
