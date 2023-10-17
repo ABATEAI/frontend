@@ -25,6 +25,10 @@ export default class Cart {
     this.totalPrice = 0.0
   }
 
+  getCart() {
+    return this.cart
+  }
+
   getTotalItems() {
     // Load from sessionStorage first for consistency among multiple Carts
     this.loadFromSessionStorage()
@@ -75,6 +79,10 @@ export default class Cart {
   }
 
   loadFromSessionStorage() {
+    if (typeof sessionStorage === undefined) {
+      return
+    }
+
     const strMap = sessionStorage.getItem("abateai-cart")
 
     if (strMap != null) {
@@ -95,6 +103,10 @@ export default class Cart {
   }
 
   saveToSessionStorage() {
+    if (typeof sessionStorage === undefined) {
+      return
+    }
+
     sessionStorage.setItem("abateai-cart", JSON.stringify(this, Cart.replacer))
   }
 
