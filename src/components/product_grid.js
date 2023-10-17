@@ -2,8 +2,10 @@
 
 import Col from "react-bootstrap/Col"
 import ProductCard from "./product_card"
+import ProductModal from "./product_modal"
 import Row from "react-bootstrap/Row"
 import { useEffect } from "react"
+import { useState } from "react"
 
 export default function ProductGrid({ idImageMap, itemArray }) {
   /*
@@ -25,11 +27,40 @@ export default function ProductGrid({ idImageMap, itemArray }) {
     import("react-bootstrap/dist/react-bootstrap.min.js")
   }, [])
 
+  const [productModalShow, setProductModalShow] = useState(
+    new Map(itemArray.map((itemObj) => [itemObj.id, false]))
+  )
+
+  const handleProductModalClose = (item_id) => {
+    // Deep copy state map like in https://react.dev/learn/tutorial-tic-tac-toe
+    setProductModalShow(
+      (prevProductModalShow) =>
+        new Map(prevProductModalShow.set(item_id, false))
+    )
+  }
+  const handleProductModalShow = (item_id) => {
+    // Deep copy state map like in https://react.dev/learn/tutorial-tic-tac-toe
+    setProductModalShow(
+      (prevProductModalShow) => new Map(prevProductModalShow.set(item_id, true))
+    )
+  }
+
   return (
     <Row xs={1} md={2} xxl={3}>
       {itemArray.map((itemObj) => (
         <Col className="mb-4" key={itemObj.id}>
-          <ProductCard idImageMap={idImageMap} itemObj={itemObj} />
+          <ProductCard
+            handleProductModalShow={() => handleProductModalShow(itemObj.id)}
+            idImageMap={idImageMap}
+            itemObj={itemObj}
+          />
+          <ProductModal
+            idImageMap={idImageMap}
+            itemObj={itemObj}
+            onAddToOrder={() => console.log("Added items to order")}
+            onHide={() => handleProductModalClose(itemObj.id)}
+            show={productModalShow.get(itemObj.id)}
+          />
         </Col>
       ))}
     </Row>
