@@ -7,7 +7,7 @@ import Row from "react-bootstrap/Row"
 import { useEffect } from "react"
 import { useState } from "react"
 
-export default function ProductGrid({ idImageMap, itemArray }) {
+export default function ProductGrid({ cart, idImageMap, itemArray }) {
   /*
    * useEffect() can only be used in client components.
    * react-bootstrap does not depend on bootstrap.js and
@@ -57,7 +57,13 @@ export default function ProductGrid({ idImageMap, itemArray }) {
           <ProductModal
             idImageMap={idImageMap}
             itemObj={itemObj}
-            onAddToOrder={() => console.log("Added items to order")}
+            onAddToOrder={(items) =>
+              items.forEach((item) => {
+                for (let qty = 0; qty < item.item_qty; qty++) {
+                  cart.addItem(item.item_id, item.item_name, item.item_price)
+                }
+              })
+            }
             onHide={() => handleProductModalClose(itemObj.id)}
             show={productModalShow.get(itemObj.id)}
           />
