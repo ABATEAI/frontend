@@ -17,7 +17,7 @@ class Item {
 /**
  * Cart
  */
-class Cart {
+export default class Cart {
   constructor() {
     // <item_id, Item>
     this.cart = new Map()
