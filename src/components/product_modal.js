@@ -1,10 +1,14 @@
 "use client"
 
+import Badge from "react-bootstrap/Badge"
 import Button from "react-bootstrap/Button"
+import ButtonGroup from "react-bootstrap/ButtonGroup"
 import Container from "react-bootstrap/Container"
 import Image from "next/image"
+import ListGroup from "react-bootstrap/ListGroup"
 import Modal from "react-bootstrap/Modal"
 import { useEffect } from "react"
+import { useState } from "react"
 
 export default function ProductModal({
   idImageMap,
@@ -39,6 +43,65 @@ export default function ProductModal({
   const imageAlt = "Image of " + itemData.name
   const imagePath = "/images/" + idImageMap.get(itemData.image_ids[0])
 
+  const [qtyForSize, setQtyForSize] = useState(
+    new Map(itemData.variations.map((sizeObj) => [sizeObj.id, 0]))
+  )
+
+  const handleIncrementQtyForSize = (size_id) => {
+    // Deep copy state map like in https://react.dev/learn/tutorial-tic-tac-toe
+    setQtyForSize(
+      (prevQtyForSize) =>
+        new Map(prevQtyForSize.set(size_id, prevQtyForSize.get(size_id) + 1))
+    )
+  }
+
+  const handleDecrementQtyForSize = (size_id) => {
+    // Deep copy state map like in https://react.dev/learn/tutorial-tic-tac-toe
+    if (qtyForSize.get(size_id) === 0) {
+      // Don't decrement quantity if it is already zero
+      return
+    }
+
+    setQtyForSize(
+      (prevQtyForSize) =>
+        new Map(prevQtyForSize.set(size_id, prevQtyForSize.get(size_id) - 1))
+    )
+  }
+
+  const handleAddToOrder = () => {
+    // Items that have been added through this modal
+    let itemsToOrder = []
+
+    for (const sizeObj of itemData.variations) {
+      if (qtyForSize.get(sizeObj.id) === 0) {
+        continue
+      }
+
+      itemsToOrder.push({
+        item_id: sizeObj.id,
+        item_name: itemData.name + ", " + sizeObj.item_variation_data.name,
+        item_price: sizeObj.item_variation_data.price_money.amount / 100.0,
+        item_qty: qtyForSize.get(sizeObj.id),
+      })
+    }
+
+    if (itemsToOrder.length === 0) {
+      // Nothing to order
+      return
+    }
+
+    // Add items to cart
+    onAddToOrder(itemsToOrder)
+
+    // Reset quantities for sizes
+    setQtyForSize(
+      new Map(itemData.variations.map((sizeObj) => [sizeObj.id, 0]))
+    )
+
+    // Finally, close modal
+    onHide()
+  }
+
   return (
     <Modal
       aria-labelledby="product-modal-vcenter"
@@ -65,21 +128,50 @@ export default function ProductModal({
 
         <p className="mb-3">{itemData.description}</p>
 
-        {itemData.variations.map((sizeObj) => (
-          <p key={sizeObj.id} className="mb-2">
-            {sizeObj.item_variation_data.name}, $
-            {(
-              sizeObj.item_variation_data.price_money.amount / 100.0
-            ).toLocaleString("en-US", {
-              maximumFractionDigits: 2,
-              minimumFractionDigits: 2,
-            })}
-          </p>
-        ))}
+        <Container>
+          <ListGroup variant="flush">
+            {itemData.variations.map((sizeObj) => (
+              <ListGroup.Item
+                className="d-flex justify-content-between align-items-center"
+                key={sizeObj.id}
+              >
+                <span className="ms-2">{sizeObj.item_variation_data.name}</span>
+                <span>
+                  $
+                  {(
+                    sizeObj.item_variation_data.price_money.amount / 100.0
+                  ).toLocaleString("en-US", {
+                    maximumFractionDigits: 2,
+                    minimumFractionDigits: 2,
+                  })}
+                </span>
+                <ButtonGroup aria-label="Increment/decrement quantity for size">
+                  <Button
+                    className="fw-bold"
+                    onClick={() => handleDecrementQtyForSize(sizeObj.id)}
+                    size="sm"
+                    variant="outline-dark"
+                  >
+                    &#65293;
+                  </Button>
+                  <Button
+                    className="fw-bold"
+                    onClick={() => handleIncrementQtyForSize(sizeObj.id)}
+                    size="sm"
+                    variant="dark"
+                  >
+                    &#65291;
+                  </Button>
+                </ButtonGroup>
+                <Badge bg="dark">{qtyForSize.get(sizeObj.id)}</Badge>
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
+        </Container>
       </Modal.Body>
 
       <Modal.Footer>
-        <Button onClick={onAddToOrder} variant="dark">
+        <Button onClick={handleAddToOrder} variant="dark">
           Add to order
         </Button>
       </Modal.Footer>
