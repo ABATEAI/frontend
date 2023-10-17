@@ -1,6 +1,7 @@
 "use client"
 
-import ProductGrid from "../components/product_grid"
+import Cart from "./cart"
+import ProductGrid from "./product_grid"
 import Tab from "react-bootstrap/Tab"
 import Tabs from "react-bootstrap/Tabs"
 import { useEffect } from "react"
@@ -25,6 +26,8 @@ export default function CategoryTabs({ categoryItemMap, idImageMap }) {
     import("react-bootstrap/dist/react-bootstrap.min.js")
   }, [])
 
+  let cart = new Cart()
+
   return (
     <Tabs
       className="my-5"
@@ -36,6 +39,7 @@ export default function CategoryTabs({ categoryItemMap, idImageMap }) {
       {[...categoryItemMap.keys()].map((category) => (
         <Tab eventKey={category.toLowerCase()} key={category} title={category}>
           <ProductGrid
+            cart={cart}
             idImageMap={idImageMap}
             itemArray={categoryItemMap.get(category)}
           />
