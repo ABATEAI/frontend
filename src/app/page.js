@@ -33,23 +33,6 @@ async function getCatalogObjects() {
 }
 
 /**
- * Get catalog objs with type ITEM_OPTION from backend (available pizza sizes)
- * @returns {object} JS object containing JSON from response
- */
-async function getCatalogSizes() {
-  // Referenced
-  // - https://nextjs.org/docs/app/building-your-application/data-fetching
-  //   /fetching-caching-and-revalidating
-  const res = await fetch(getEndpoint("square", "/sizes"))
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch catalog sizes")
-  }
-
-  return res.json()
-}
-
-/**
  * Home page of abateai.com
  * @returns Home page consisting of JSX components
  */

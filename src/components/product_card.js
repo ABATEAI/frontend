@@ -3,12 +3,14 @@
 import Button from "react-bootstrap/Button"
 import Card from "react-bootstrap/Card"
 import Image from "next/image"
-import ProductModal from "./product_modal"
 import styles from "./product_card.module.css"
 import { useEffect } from "react"
-import { useState } from "react"
 
-export default function ProductCard({ idImageMap, itemObj }) {
+export default function ProductCard({
+  handleProductModalShow,
+  idImageMap,
+  itemObj,
+}) {
   /*
    * useEffect() can only be used in client components.
    * react-bootstrap does not depend on bootstrap.js and
@@ -27,11 +29,6 @@ export default function ProductCard({ idImageMap, itemObj }) {
   useEffect(() => {
     import("react-bootstrap/dist/react-bootstrap.min.js")
   }, [])
-
-  const [productModalShow, setProductModalShow] = useState(false)
-
-  const handleProductModalClose = () => setProductModalShow(false)
-  const handleProductModalShow = () => setProductModalShow(true)
 
   const itemData = itemObj.item_data
 
@@ -85,14 +82,6 @@ export default function ProductCard({ idImageMap, itemObj }) {
           </Card.Text>
         </Card.Body>
       </Card>
-
-      <ProductModal
-        idImageMap={idImageMap}
-        itemObj={itemObj}
-        onAddToOrder={() => console.log("Added items to order")}
-        onHide={handleProductModalClose}
-        show={productModalShow}
-      />
     </>
   )
 }
