@@ -2,13 +2,19 @@
 
 import Button from "react-bootstrap/Button"
 import CartAlert from "./cart_alert"
+import CartTable from "./cart_table"
 import Modal from "react-bootstrap/Modal"
-import Table from "react-bootstrap/Table"
-import useSWR from "swr"
 import { useEffect } from "react"
 import { useState } from "react"
 
-export default function CartModal({ cart, onHide, onOrder, show }) {
+export default function CartModal({
+  cart,
+  cartTable,
+  onHide,
+  onOrder,
+  setCartTable,
+  show,
+}) {
   /*
    * useEffect() can only be used in client components.
    * react-bootstrap does not depend on bootstrap.js and
@@ -31,31 +37,16 @@ export default function CartModal({ cart, onHide, onOrder, show }) {
   }, [])
 
   const [showAlert, setShowAlert] = useState(false)
-  const [alertMsg, setAlertMsg] = useState("")
   const [idToDelete, setIdToDelete] = useState("")
-
-  // Client-side fetching resources
-  // - nextjs.org/docs/pages/building-your-application/data-fetching/client-side
-  // - swr.vercel.app/docs/getting-started
-  const fetcher = (...args) => fetch(...args).then((res) => res.json())
+  const [nameToDelete, setNameToDelete] = useState("")
 
   /**
    * When the customer attempts to delete an item from the cart, display alert
    */
   function handleOnDeleteAttempt(item_id, item) {
-    // Todo: Create backend endpoint with item name and size parameters and
-    //       returns Makersuite generated text
-    const { data, error } = useSWR("/api/square/location", fetcher)
-
-    if (error) {
-      setAlertMsg("Just know that we failed to persuade you from removing it")
-      setIdToDelete("")
-    } else if (data) {
-      // Todo: Update message once backend endpoint is created
-      setAlertMsg("item_id: " + item_id + " " + data.location.name)
-      setIdToDelete(item_id)
-    }
-
+    setIdToDelete(item_id)
+    setNameToDelete(item.name)
+    onHide()
     setShowAlert(true)
   }
 
@@ -64,8 +55,8 @@ export default function CartModal({ cart, onHide, onOrder, show }) {
    */
   function handleCloseAlert() {
     setShowAlert(false)
-    setAlertMsg("")
     setIdToDelete("")
+    setNameToDelete("")
   }
 
   /**
@@ -75,9 +66,8 @@ export default function CartModal({ cart, onHide, onOrder, show }) {
     // Remove item from cart
     cart.removeItemAll(idToDelete)
 
-    // Remove remove from table
-    const table_row = document.getElementById(idToDelete)
-    table_row.parentNode.removeChild(table_row)
+    // Remove row from table
+    setCartTable(new Map([...cart.getCart().entries()]))
 
     handleCloseAlert()
   }
@@ -96,24 +86,10 @@ export default function CartModal({ cart, onHide, onOrder, show }) {
         </Modal.Header>
 
         <Modal.Body>
-          <Table borderless hover id="cart-table">
-            <tbody>
-              {[...cart.getCart().entries()].map((item_id, item) => (
-                <tr id={item_id} key={item_id}>
-                  <td>
-                    <Button
-                      onClick={() => handleOnDeleteAttempt(item_id, item)}
-                    >
-                      &times;
-                    </Button>
-                  </td>
-                  <td>{item.name}</td>
-                  <td>{item.qty}</td>
-                  <td>${Number(item.qty * item.price).toFixed(2)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <CartTable
+            cartTable={cartTable}
+            handleOnDeleteAttempt={handleOnDeleteAttempt}
+          />
         </Modal.Body>
 
         <Modal.Footer>
@@ -126,7 +102,8 @@ export default function CartModal({ cart, onHide, onOrder, show }) {
       <CartAlert
         handleCloseAlert={handleCloseAlert}
         handleRemoveItem={handleRemoveItem}
-        message={alertMsg}
+        idToDelete={idToDelete}
+        nameToDelete={nameToDelete}
         showAlert={showAlert}
       />
     </>
