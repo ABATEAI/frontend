@@ -34,9 +34,7 @@ export default function CartTable({ cartMap, handleOnDeleteAttempt }) {
               <td>
                 <Button
                   className="fs-3 fw-bold"
-                  onClick={() =>
-                    handleOnDeleteAttempt(idItemArr[0], idItemArr[1])
-                  }
+                  onClick={() => handleOnDeleteAttempt(idItemArr[0])}
                   variant="outline-danger"
                 >
                   &times;
