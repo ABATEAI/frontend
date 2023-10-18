@@ -2,12 +2,20 @@
 
 import Alert from "react-bootstrap/Alert"
 import Button from "react-bootstrap/Button"
+import Container from "react-bootstrap/Container"
+import useSWR from "swr"
 import { useEffect } from "react"
+
+// Client-side fetching resources
+// - nextjs.org/docs/pages/building-your-application/data-fetching/client-side
+// - swr.vercel.app/docs/getting-started
+const fetcher = (...args) => fetch(...args).then((res) => res.json())
 
 export default function CartAlert({
   handleCloseAlert,
   handleRemoveItem,
-  message,
+  idToDelete,
+  nameToDelete,
   showAlert,
 }) {
   /*
@@ -29,13 +37,24 @@ export default function CartAlert({
     import("react-bootstrap/dist/react-bootstrap.min.js")
   }, [])
 
+  // Todo: Create backend endpoint with item id and name
+  //     parameters and returns Makersuite generated text
+  const { data, error } = useSWR("/api/square/location", fetcher)
+
+  let message = "Loading persuasive message..."
+  if (error) {
+    message = "Just know that we failed to persuade you from removing it"
+  } else if (data) {
+    message = "item_id: " + idToDelete + " " + data.location.name
+  }
+
   return (
-    <>
+    <Container>
       <Alert
         dismissible
         onClose={handleCloseAlert}
         show={showAlert}
-        variant="dark"
+        variant="info"
       >
         <Alert.Heading>Before you remove that pizza...</Alert.Heading>
         <p>{message}</p>
@@ -49,6 +68,6 @@ export default function CartAlert({
           </Button>
         </div>
       </Alert>
-    </>
+    </Container>
   )
 }
