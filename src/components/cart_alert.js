@@ -63,7 +63,7 @@ export default function CartAlert({
           <Button onClick={handleRemoveItem} variant="warning">
             Remove it
           </Button>
-          <Button onClick={handleCloseAlert} variant="success">
+          <Button className="ms-2" onClick={handleCloseAlert} variant="success">
             Keep it
           </Button>
         </div>
