@@ -36,10 +36,14 @@ export default function NavbarTop() {
   let cart = new Cart()
 
   const [cartModalShow, setCartModalShow] = useState(false)
+  const [cartTable, setCartTable] = useState(
+    new Map([...cart.getCart().entries()])
+  )
 
   const handleCartModalClose = () => setCartModalShow(false)
   const handleCartModalShow = () => {
     cart.loadFromSessionStorage()
+    setCartTable(new Map([...cart.getCart().entries()]))
     setCartModalShow(true)
   }
 
@@ -106,8 +110,10 @@ export default function NavbarTop() {
 
       <CartModal
         cart={cart}
+        cartTable={cartTable}
         onHide={handleCartModalClose}
         onOrder={() => console.log("Place order via Square API.")}
+        setCartTable={setCartTable}
         show={cartModalShow}
       />
     </>
