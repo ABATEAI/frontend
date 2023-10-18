@@ -37,7 +37,7 @@ export default function CartAlert({
     import("react-bootstrap/dist/react-bootstrap.min.js")
   }, [])
 
-  item_name = nameToDelete.replaceAll(",", "")
+  let item_name = nameToDelete.replaceAll(",", "")
   item_name = item_name.replaceAll(" ", "_")
   const { data, error } = useSWR("/api/google/keep/" + item_name, fetcher)
 
