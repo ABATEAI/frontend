@@ -37,15 +37,15 @@ export default function CartAlert({
     import("react-bootstrap/dist/react-bootstrap.min.js")
   }, [])
 
-  // Todo: Create backend endpoint with item id and name
-  //     parameters and returns Makersuite generated text
-  const { data, error } = useSWR("/api/square/location", fetcher)
+  let item_name = nameToDelete.replaceAll(",", "")
+  item_name = item_name.replaceAll(" ", "_")
+  const { data, error } = useSWR("/api/google/keep/" + item_name, fetcher)
 
   let message = "Loading persuasive message..."
   if (error) {
     message = "Just know that we failed to persuade you from removing it"
   } else if (data) {
-    message = "item_id: " + idToDelete + " " + data.location.name
+    message = data
   }
 
   return (
@@ -60,10 +60,10 @@ export default function CartAlert({
         <p>{message}</p>
         <hr />
         <div className="d-flex justify-content-end">
-          <Button onClick={handleRemoveItem} variant="outline-warning">
+          <Button onClick={handleRemoveItem} variant="warning">
             Remove it
           </Button>
-          <Button onClick={handleCloseAlert} variant="outline-success">
+          <Button className="ms-2" onClick={handleCloseAlert} variant="success">
             Keep it
           </Button>
         </div>
