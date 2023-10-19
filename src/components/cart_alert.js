@@ -10,6 +10,7 @@ export default function CartAlert({
   handleCloseAlert,
   handleRemoveItem,
   idToDelete,
+  showAlert,
 }) {
   /*
    * useEffect() can only be used in client components.
@@ -32,7 +33,7 @@ export default function CartAlert({
 
   return (
     <Container>
-      <Alert show={idToDelete !== ""} variant="info">
+      <Alert show={showAlert} variant="info">
         <Alert.Heading>Before you remove that pizza...</Alert.Heading>
         <Container className="d-flex justify-content-center">
           <CartAlertBody item_id={idToDelete} />
@@ -45,7 +46,7 @@ export default function CartAlert({
           <Button
             className="ms-3"
             onClick={handleCloseAlert}
-            variant="outline-light"
+            variant="outline-primary"
           >
             Keep item
           </Button>
