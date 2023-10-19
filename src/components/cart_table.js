@@ -41,7 +41,7 @@ export default function CartTable({ cartMap, handleOnDeleteAttempt }) {
                 </Button>
               </td>
               <td>{idItemArr[1].name}</td>
-              <td>{idItemArr[1].qty}</td>
+              <td>Qty: {idItemArr[1].qty}</td>
               <td>
                 ${Number(idItemArr[1].qty * idItemArr[1].price).toFixed(2)}
               </td>
