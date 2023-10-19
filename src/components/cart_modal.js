@@ -36,20 +36,22 @@ export default function CartModal({
   }, [])
 
   const [idToDelete, setIdToDelete] = useState("")
+  const [showAlert, setShowAlert] = useState(false)
 
   /**
    * When the customer attempts to delete an item from the cart, display alert
    */
   function handleOnDeleteAttempt(item_id) {
     setIdToDelete(item_id)
+    setShowAlert(true)
     onHide()
   }
 
   /**
-   * Set showAlert to false and clear message when closing the alert
+   * Set showAlert to false
    */
   function handleCloseAlert() {
-    setIdToDelete("")
+    setShowAlert(false)
   }
 
   /**
@@ -94,6 +96,7 @@ export default function CartModal({
         handleCloseAlert={handleCloseAlert}
         handleRemoveItem={handleRemoveItem}
         idToDelete={idToDelete}
+        showAlert={showAlert}
       />
     </>
   )
