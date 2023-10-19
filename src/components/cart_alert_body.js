@@ -43,10 +43,6 @@ export default function CartAlertBody({ item_id }) {
     import("react-bootstrap/dist/react-bootstrap.min.js")
   }, [])
 
-  if (!item_id) {
-    return <div></div>
-  }
-
   const { message, isLoading, isError } = useMessage(item_id)
 
   if (isLoading) {
