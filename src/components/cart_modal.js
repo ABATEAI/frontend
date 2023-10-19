@@ -9,10 +9,10 @@ import { useState } from "react"
 
 export default function CartModal({
   cart,
-  cartTable,
+  cartMap,
   onHide,
   onOrder,
-  setCartTable,
+  setCartMap,
   show,
 }) {
   /*
@@ -23,7 +23,6 @@ export default function CartModal({
    * Referenced:
    * - react-bootstrap.netlify.app/docs/components/buttons/
    * - react-bootstrap.netlify.app/docs/components/modal/
-   * - react-bootstrap.netlify.app/docs/components/table/
    * - react-bootstrap.netlify.app/docs/getting-started/introduction/
    * - react-bootstrap.netlify.app/docs/getting-started/why-react-bootstrap
    * - blog.logrocket.com/handling-bootstrap-integration-next-js/
@@ -36,38 +35,32 @@ export default function CartModal({
     import("react-bootstrap/dist/react-bootstrap.min.js")
   }, [])
 
-  const [showAlert, setShowAlert] = useState(false)
   const [idToDelete, setIdToDelete] = useState("")
-  const [nameToDelete, setNameToDelete] = useState("")
+  const [showAlert, setShowAlert] = useState(false)
 
   /**
    * When the customer attempts to delete an item from the cart, display alert
    */
-  function handleOnDeleteAttempt(item_id, item) {
+  function handleOnDeleteAttempt(item_id) {
     setIdToDelete(item_id)
-    setNameToDelete(item.name)
-    onHide()
     setShowAlert(true)
+    onHide()
   }
 
   /**
-   * Set showAlert to false and clear message when closing the alert
+   * Set showAlert to false
    */
   function handleCloseAlert() {
     setShowAlert(false)
-    setIdToDelete("")
-    setNameToDelete("")
   }
 
   /**
    * Customer decided to still remove item from cart so remove corresponding row
    */
   function handleRemoveItem() {
-    // Remove item from cart
+    // Remove item from cart and update map controlling state of CartTable
     cart.removeItemAll(idToDelete)
-
-    // Remove row from table
-    setCartTable(new Map([...cart.getCart().entries()]))
+    setCartMap(new Map([...cart.getCart().entries()]))
 
     handleCloseAlert()
   }
@@ -87,7 +80,7 @@ export default function CartModal({
 
         <Modal.Body>
           <CartTable
-            cartTable={cartTable}
+            cartMap={cartMap}
             handleOnDeleteAttempt={handleOnDeleteAttempt}
           />
         </Modal.Body>
@@ -103,7 +96,6 @@ export default function CartModal({
         handleCloseAlert={handleCloseAlert}
         handleRemoveItem={handleRemoveItem}
         idToDelete={idToDelete}
-        nameToDelete={nameToDelete}
         showAlert={showAlert}
       />
     </>

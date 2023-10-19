@@ -2,20 +2,14 @@
 
 import Alert from "react-bootstrap/Alert"
 import Button from "react-bootstrap/Button"
+import CartAlertBody from "./cart_alert_body"
 import Container from "react-bootstrap/Container"
-import useSWR from "swr"
 import { useEffect } from "react"
-
-// Client-side fetching resources
-// - nextjs.org/docs/pages/building-your-application/data-fetching/client-side
-// - swr.vercel.app/docs/getting-started
-const fetcher = (...args) => fetch(...args).then((res) => res.json())
 
 export default function CartAlert({
   handleCloseAlert,
   handleRemoveItem,
   idToDelete,
-  nameToDelete,
   showAlert,
 }) {
   /*
@@ -37,34 +31,24 @@ export default function CartAlert({
     import("react-bootstrap/dist/react-bootstrap.min.js")
   }, [])
 
-  let item_name = nameToDelete.replaceAll(",", "")
-  item_name = item_name.replaceAll(" ", "_")
-  const { data, error } = useSWR("/api/google/keep/" + item_name, fetcher)
-
-  let message = "Loading persuasive message..."
-  if (error) {
-    message = "Just know that we failed to persuade you from removing it"
-  } else if (data) {
-    message = data
-  }
-
   return (
     <Container>
-      <Alert
-        dismissible
-        onClose={handleCloseAlert}
-        show={showAlert}
-        variant="info"
-      >
+      <Alert show={showAlert} variant="info">
         <Alert.Heading>Before you remove that pizza...</Alert.Heading>
-        <p>{message}</p>
+        <Container className="d-flex justify-content-center">
+          <CartAlertBody item_id={idToDelete} />
+        </Container>
         <hr />
         <div className="d-flex justify-content-end">
-          <Button onClick={handleRemoveItem} variant="warning">
-            Remove it
+          <Button onClick={handleRemoveItem} variant="outline-secondary">
+            Remove item
           </Button>
-          <Button className="ms-2" onClick={handleCloseAlert} variant="success">
-            Keep it
+          <Button
+            className="ms-3"
+            onClick={handleCloseAlert}
+            variant="outline-primary"
+          >
+            Keep item
           </Button>
         </div>
       </Alert>
