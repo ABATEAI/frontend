@@ -79,7 +79,7 @@ export default class Cart {
   }
 
   loadFromSessionStorage() {
-    if (typeof sessionStorage === undefined) {
+    if (typeof sessionStorage === "undefined") {
       return
     }
 
