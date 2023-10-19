@@ -4,7 +4,7 @@ import ABATEAI_Logo from "../../public/icons/ABATE_266x64.svg"
 import Button from "react-bootstrap/Button"
 import Cart from "./cart"
 import CartIcon from "../../public/icons/shopping_cart.svg"
-import CartModal from "./cart_modal.js"
+import CartModal from "./cart_modal"
 import Container from "react-bootstrap/Container"
 import Image from "next/image"
 import Link from "next/link"
@@ -34,16 +34,15 @@ export default function NavbarTop() {
   }, [])
 
   let cart = new Cart()
+  cart.loadFromSessionStorage()
 
   const [cartModalShow, setCartModalShow] = useState(false)
-  const [cartTable, setCartTable] = useState(
-    new Map([...cart.getCart().entries()])
-  )
+  const [cartMap, setCartMap] = useState(new Map([...cart.getCart().entries()]))
 
   const handleCartModalClose = () => setCartModalShow(false)
   const handleCartModalShow = () => {
     cart.loadFromSessionStorage()
-    setCartTable(new Map([...cart.getCart().entries()]))
+    setCartMap(new Map([...cart.getCart().entries()]))
     setCartModalShow(true)
   }
 
@@ -110,10 +109,10 @@ export default function NavbarTop() {
 
       <CartModal
         cart={cart}
-        cartTable={cartTable}
+        cartMap={cartMap}
         onHide={handleCartModalClose}
         onOrder={() => console.log("Place order via Square API.")}
-        setCartTable={setCartTable}
+        setCartMap={setCartMap}
         show={cartModalShow}
       />
     </>
