@@ -44,7 +44,7 @@ export default function NavbarTop() {
       cart.loadFromSessionStorage()
       setCartMap(new Map([...cart.getCart().entries()]))
     }
-  }, [cartModalShow])
+  }, [cart, cartModalShow])
 
   return (
     <>
