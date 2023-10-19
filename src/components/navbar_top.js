@@ -14,6 +14,14 @@ import { useEffect } from "react"
 import { useState } from "react"
 
 export default function NavbarTop() {
+  let cart = new Cart()
+
+  const [cartModalShow, setCartModalShow] = useState(false)
+  const [cartMap, setCartMap] = useState(new Map([...cart.getCart().entries()]))
+
+  const handleCartModalClose = () => setCartModalShow(false)
+  const handleCartModalShow = () => setCartModalShow(true)
+
   /*
    * useEffect() can only be used in client components.
    * react-bootstrap does not depend on bootstrap.js and
@@ -31,20 +39,12 @@ export default function NavbarTop() {
    */
   useEffect(() => {
     import("react-bootstrap/dist/react-bootstrap.min.js")
-  }, [])
 
-  let cart = new Cart()
-  cart.loadFromSessionStorage()
-
-  const [cartModalShow, setCartModalShow] = useState(false)
-  const [cartMap, setCartMap] = useState(new Map([...cart.getCart().entries()]))
-
-  const handleCartModalClose = () => setCartModalShow(false)
-  const handleCartModalShow = () => {
-    cart.loadFromSessionStorage()
-    setCartMap(new Map([...cart.getCart().entries()]))
-    setCartModalShow(true)
-  }
+    if (cartModalShow === true) {
+      cart.loadFromSessionStorage()
+      setCartMap(new Map([...cart.getCart().entries()]))
+    }
+  }, [cartModalShow])
 
   return (
     <>
