@@ -43,6 +43,10 @@ export default function CartAlertBody({ item_id }) {
     import("react-bootstrap/dist/react-bootstrap.min.js")
   }, [])
 
+  if (!item_id) {
+    return <div></div>
+  }
+
   const { message, isLoading, isError } = useMessage(item_id)
 
   if (isLoading) {
@@ -57,5 +61,6 @@ export default function CartAlertBody({ item_id }) {
     return <p>We hope you will reconsider removing this item.</p>
   }
 
-  return <div>{message}</div>
+  // Remove paragraph element tags via substring
+  return message.substring(3, message.length - 4)
 }
