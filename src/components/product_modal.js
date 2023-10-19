@@ -7,6 +7,7 @@ import Container from "react-bootstrap/Container"
 import Image from "next/image"
 import ListGroup from "react-bootstrap/ListGroup"
 import Modal from "react-bootstrap/Modal"
+import Table from "react-bootstrap/Table"
 import { useEffect } from "react"
 import { useState } from "react"
 
@@ -131,39 +132,54 @@ export default function ProductModal({
         <Container>
           <ListGroup variant="flush">
             {itemData.variations.map((sizeObj) => (
-              <ListGroup.Item
-                className="d-flex justify-content-between align-items-center"
-                key={sizeObj.id}
-              >
-                <span className="ms-2">{sizeObj.item_variation_data.name}</span>
-                <span>
-                  $
-                  {(
-                    sizeObj.item_variation_data.price_money.amount / 100.0
-                  ).toLocaleString("en-US", {
-                    maximumFractionDigits: 2,
-                    minimumFractionDigits: 2,
-                  })}
-                </span>
-                <ButtonGroup aria-label="Increment/decrement quantity for size">
-                  <Button
-                    className="fw-bold"
-                    onClick={() => handleDecrementQtyForSize(sizeObj.id)}
-                    size="sm"
-                    variant="outline-dark"
-                  >
-                    &#65293;
-                  </Button>
-                  <Button
-                    className="fw-bold"
-                    onClick={() => handleIncrementQtyForSize(sizeObj.id)}
-                    size="sm"
-                    variant="dark"
-                  >
-                    &#65291;
-                  </Button>
-                </ButtonGroup>
-                <Badge bg="dark">{qtyForSize.get(sizeObj.id)}</Badge>
+              <ListGroup.Item key={sizeObj.id}>
+                <Table borderless>
+                  <tbody>
+                    <tr className="d-flex align-items-center justify-content-between">
+                      <td className="ms-2">
+                        {sizeObj.item_variation_data.name}
+                      </td>
+                      <td>
+                        $
+                        {(
+                          sizeObj.item_variation_data.price_money.amount / 100.0
+                        ).toLocaleString("en-US", {
+                          maximumFractionDigits: 2,
+                          minimumFractionDigits: 2,
+                        })}
+                      </td>
+                      <td>
+                        <ButtonGroup aria-label="Increment/decrement quantity for size">
+                          <Button
+                            className="fw-bold"
+                            onClick={() =>
+                              handleDecrementQtyForSize(sizeObj.id)
+                            }
+                            size="sm"
+                            variant="outline-dark"
+                          >
+                            &#65293;
+                          </Button>
+                          <Button
+                            className="fw-bold"
+                            onClick={() =>
+                              handleIncrementQtyForSize(sizeObj.id)
+                            }
+                            size="sm"
+                            variant="dark"
+                          >
+                            &#65291;
+                          </Button>
+                        </ButtonGroup>
+                      </td>
+                      <td>
+                        <Badge bg="secondary">
+                          {qtyForSize.get(sizeObj.id)}
+                        </Badge>
+                      </td>
+                    </tr>
+                  </tbody>
+                </Table>
               </ListGroup.Item>
             ))}
           </ListGroup>
